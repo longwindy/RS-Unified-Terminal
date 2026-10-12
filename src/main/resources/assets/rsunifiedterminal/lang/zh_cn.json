@@ -1,0 +1,15 @@
+{
+  "item.rsunifiedterminal.wireless_universal_terminal": "无线通用终端",
+  "item.rsunifiedterminal.creative_wireless_universal_terminal": "创造无线通用终端",
+  "sidebutton.rsunifiedterminal.view": "显示",
+  "sidebutton.rsunifiedterminal.view.items": "显示物品",
+  "sidebutton.rsunifiedterminal.view.fluids": "显示流体",
+  "sidebutton.rsunifiedterminal.page.crafting": "合成终端",
+  "sidebutton.rsunifiedterminal.page.pattern": "样板终端",
+  "sidebutton.rsunifiedterminal.page.crafter_manager": "接口管理",
+  "sidebutton.rsunifiedterminal.page.current": "当前页面",
+  "gui.rsunifiedterminal.crafting_monitor": "合成监控",
+  "gui.rsunifiedterminal.back_to_terminal": "返回终端",
+  "gui.rsunifiedterminal.scale_pattern": "左键：原料和产物数量 ×2\n右键：原料和产物数量 ÷2\n按住 Shift：×8 / ÷8",
+  "key.rsunifiedterminal.open_terminal": "打开无线通用终端"
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "refinedstorageaddons:wireless_crafting_grid"
+    },
+    {
+      "item": "refinedstorage:wireless_fluid_grid"
+    },
+    {
+      "item": "refinedstorage:wireless_crafting_monitor"
+    },
+    {
+      "tag": "refinedstorage:pattern_grid"
+    },
+    {
+      "tag": "refinedstorage:crafter_manager"
+    }
+  ],
+  "result": {
+    "item": "rsunifiedterminal:wireless_universal_terminal"
+  }
+}

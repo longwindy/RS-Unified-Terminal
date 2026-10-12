@@ -1,0 +1,15 @@
+{
+  "item.rsunifiedterminal.wireless_universal_terminal": "Wireless Universal Terminal",
+  "item.rsunifiedterminal.creative_wireless_universal_terminal": "Creative Wireless Universal Terminal",
+  "sidebutton.rsunifiedterminal.view": "View",
+  "sidebutton.rsunifiedterminal.view.items": "Items",
+  "sidebutton.rsunifiedterminal.view.fluids": "Fluids",
+  "sidebutton.rsunifiedterminal.page.crafting": "Crafting Grid",
+  "sidebutton.rsunifiedterminal.page.pattern": "Pattern Grid",
+  "sidebutton.rsunifiedterminal.page.crafter_manager": "Crafter Manager",
+  "sidebutton.rsunifiedterminal.page.current": "Current page",
+  "gui.rsunifiedterminal.crafting_monitor": "Crafting Monitor",
+  "gui.rsunifiedterminal.back_to_terminal": "Back to terminal",
+  "gui.rsunifiedterminal.scale_pattern": "Left click: multiply inputs and outputs by 2\nRight click: divide them by 2\nHold Shift: x8 / ÷8",
+  "key.rsunifiedterminal.open_terminal": "Open Wireless Universal Terminal"
+}
