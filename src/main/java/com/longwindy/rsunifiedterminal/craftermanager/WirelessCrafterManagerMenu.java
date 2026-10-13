@@ -43,6 +43,7 @@ public class WirelessCrafterManagerMenu extends BaseContainerMenu {
     private IScreenInfoProvider screenInfoProvider;
     private Map<String, Integer> containerData;
     private int rows;
+    private boolean contentsReceived;
 
     public WirelessCrafterManagerMenu(Player player, int windowId, ItemStack stack, PlayerSlot slot, @Nullable INetwork network) {
         super(ModMenus.CRAFTER_MANAGER.get(), null, player, windowId);
@@ -75,6 +76,25 @@ public class WirelessCrafterManagerMenu extends BaseContainerMenu {
         if (!player.level().isClientSide && network != null) {
             network.getNetworkItemManager().close(player);
         }
+    }
+
+    /**
+     * The client receives the pattern slots only after the screen has opened. Slots are filtered by their pattern
+     * when there is a search text (e.g. one carried over from another page), so the screen filters again once they arrive.
+     */
+    @Override
+    public void initializeContents(int stateId, List<ItemStack> items, ItemStack carried) {
+        super.initializeContents(stateId, items, carried);
+        contentsReceived = true;
+    }
+
+    /**
+     * @return true once after the slot contents have been received from the server
+     */
+    public boolean consumeContentsReceived() {
+        boolean received = contentsReceived;
+        contentsReceived = false;
+        return received;
     }
 
     public void initSlotsServer() {

@@ -125,6 +125,11 @@ public class WirelessCrafterManagerScreen extends BaseScreen<WirelessCrafterMana
 
     @Override
     public void tick(int x, int y) {
+        // The pattern slots arrive after the screen opened: filter them again if a search text was already set.
+        if (menu.consumeContentsReceived() && !getSearchFieldText().trim().isEmpty()) {
+            menu.initSlots(null);
+        }
+
         scrollbar.setEnabled((getRows() - 1) >= getVisibleRows());
         scrollbar.setMaxOffset(getRows() - getVisibleRows());
     }
