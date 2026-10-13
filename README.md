@@ -19,6 +19,7 @@ An addon for [Refined Storage](https://github.com/refinedmods/refinedstorage) th
 - **Crafter Manager**: manage the patterns of every crafter in the network
 - **Crafting Monitor**: opened with the button in the top right corner of the terminal; the button in the same spot on the Crafting Monitor goes back
 - **Middle-click** a resource on the Crafting Grid or Pattern Grid page to open its autocrafting request window directly, even if it is already in stock
+- The search text is kept when switching pages, and cleared when the terminal is closed (`keepSearchOnPageSwitch` in `rsunifiedterminal-client.toml`, on by default)
 
 ## Dependencies
 

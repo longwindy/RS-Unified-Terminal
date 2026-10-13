@@ -26,6 +26,13 @@ public final class ClientEvents {
     private ClientEvents() {
     }
 
+    @SubscribeEvent
+    public static void onScreenClosing(ScreenEvent.Closing event) {
+        if (TerminalScreens.isTerminalScreen(event.getScreen())) {
+            TerminalClient.onTerminalScreenClosing();
+        }
+    }
+
     /**
      * Refined Storage creates patterns through a message that finds the pattern grid by its block position,
      * so the "create pattern" button of the pattern page is handled here instead.

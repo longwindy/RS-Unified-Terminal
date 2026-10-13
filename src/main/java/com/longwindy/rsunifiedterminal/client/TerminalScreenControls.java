@@ -80,6 +80,8 @@ public final class TerminalScreenControls {
             () -> TerminalClient.open(TerminalOpener.TARGET_CRAFTING_MONITOR)
         ));
 
+        restoreSearch(screen);
+
         if (currentPage == TerminalPage.PATTERN && node.isProcessingPattern()) {
             int matrixTop = screen.getTopHeight() + screen.getVisibleRows() * 18 + 4;
             host.rsunifiedterminal$addWidget(new ScalePatternButton(
@@ -99,6 +101,15 @@ public final class TerminalScreenControls {
             () -> TerminalClient.open(TerminalOpener.TARGET_LAST_PAGE)
         ));
 
+        TerminalClient.onSwitchCompleted();
         TerminalClient.restoreCursor();
+    }
+
+    // Setting the text runs the search box responder: the grid is filtered again and JEI is synchronized if enabled.
+    private static void restoreSearch(GridScreen screen) {
+        String search = TerminalClient.takeSearchToRestore();
+        if (search != null && screen.getSearchField() != null) {
+            screen.getSearchField().setValue(search);
+        }
     }
 }

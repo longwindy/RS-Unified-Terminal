@@ -110,6 +110,12 @@ public class WirelessCrafterManagerScreen extends BaseScreen<WirelessCrafterMana
             setFocused(searchField);
         }
 
+        // Keep the search text of the page we switched from.
+        String search = TerminalClient.takeSearchToRestore();
+        if (search != null) {
+            searchField.setValue(search);
+        }
+
         TerminalClient.restoreCursor();
     }
 

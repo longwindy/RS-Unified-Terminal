@@ -29,6 +29,7 @@ public final class RSUnifiedTerminal {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
 
         ModItems.register(bus);
         ModMenus.register(bus);
