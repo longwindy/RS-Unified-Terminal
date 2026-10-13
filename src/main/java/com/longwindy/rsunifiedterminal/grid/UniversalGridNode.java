@@ -2,11 +2,13 @@ package com.longwindy.rsunifiedterminal.grid;
 
 import com.longwindy.rsunifiedterminal.Config;
 import com.longwindy.rsunifiedterminal.compat.PolymorphCompat;
+import com.longwindy.rsunifiedterminal.mixin.GridNetworkNodeAccessor;
 import com.longwindy.rsunifiedterminal.network.GridSettingsMessage;
 import com.longwindy.rsunifiedterminal.network.ModNetwork;
 import com.longwindy.rsunifiedterminal.terminal.TerminalData;
 import com.refinedmods.refinedstorage.api.network.INetwork;
 import com.refinedmods.refinedstorage.api.network.grid.GridType;
+import com.refinedmods.refinedstorage.api.network.grid.ICraftingGridListener;
 import com.refinedmods.refinedstorage.api.network.grid.IGrid;
 import com.refinedmods.refinedstorage.api.network.grid.handler.IFluidGridHandler;
 import com.refinedmods.refinedstorage.api.network.grid.handler.IItemGridHandler;
@@ -16,6 +18,7 @@ import com.refinedmods.refinedstorage.api.util.IStackList;
 import com.refinedmods.refinedstorage.apiimpl.network.node.GridNetworkNode;
 import com.refinedmods.refinedstorage.apiimpl.storage.cache.listener.FluidGridStorageCacheListener;
 import com.refinedmods.refinedstorage.apiimpl.storage.cache.listener.ItemGridStorageCacheListener;
+import com.refinedmods.refinedstorage.container.GridContainerMenu;
 import com.refinedmods.refinedstorage.inventory.player.PlayerSlot;
 import com.refinedmods.refinedstorage.item.NetworkItem;
 import com.refinedmods.refinedstorage.item.WirelessGridItem;
@@ -31,6 +34,7 @@ import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -258,6 +262,39 @@ public class UniversalGridNode extends GridNetworkNode {
     // endregion
 
     // region Crafting and patterns
+
+    @Override
+    public void onCraftingMatrixChanged() {
+        // Ask Polymorph for the player's recipe only when the current one has to be looked up again, like Refined Polymorphism
+        // does for other wireless grids. Selecting a recipe with the button sets it as the current recipe and then calls this:
+        // asking Polymorph at that point would put back the previous choice, as the player's new choice reaches the server
+        // in a separate packet that comes after.
+        if (!loading && !level.isClientSide) {
+            CraftingRecipe current = ((GridNetworkNodeAccessor) this).rsunifiedterminal$getCurrentRecipe();
+            if (current == null || !current.matches(getCraftingMatrix(), level)) {
+                PolymorphCompat.selectRecipe(this, player);
+            }
+        }
+        super.onCraftingMatrixChanged();
+    }
+
+    @Override
+    public void addCraftingListener(ICraftingGridListener listener) {
+        super.addCraftingListener(listener);
+
+        // The menu registers itself before it is opened: look the recipe up again once it is, so the recipe selection
+        // button shows up right away when the matrix already holds conflicting recipes.
+        if (!level.isClientSide && listener instanceof GridContainerMenu && PolymorphCompat.isLoaded()) {
+            MinecraftServer server = level.getServer();
+            server.tell(new TickTask(server.getTickCount(), this::refreshRecipeSelection));
+        }
+    }
+
+    // Unlike a matrix change, always use the player's choice here: it also sends the candidates to the client.
+    private void refreshRecipeSelection() {
+        PolymorphCompat.selectRecipe(this, player);
+        super.onCraftingMatrixChanged();
+    }
 
     @Override
     public void onCrafted(Player craftingPlayer, @Nullable IStackList<ItemStack> availableItems, @Nullable IStackList<ItemStack> usedItems) {

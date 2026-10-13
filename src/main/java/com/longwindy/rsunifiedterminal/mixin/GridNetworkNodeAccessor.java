@@ -12,4 +12,7 @@ public interface GridNetworkNodeAccessor {
     @Nullable
     @Accessor("currentRecipe")
     CraftingRecipe rsunifiedterminal$getCurrentRecipe();
+
+    @Accessor("currentRecipe")
+    void rsunifiedterminal$setCurrentRecipe(@Nullable CraftingRecipe recipe);
 }
